@@ -1,5 +1,9 @@
 public class Main {
 
-    Menu menu = new Menu();
+
+    public static void main(String[] args) {
+        Menu menu = new Menu();
+        menu.start();
+    }
 
 }
