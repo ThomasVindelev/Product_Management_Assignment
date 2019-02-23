@@ -7,38 +7,51 @@ public class Product {
     private String name;
     private int price;
     private String location;
+    private DB db = new DB();
 
-    public Product(String name, int price, String location) {
-        this.name = name;
-        this.price = price;
-        this.location = location;
-    }
-
-    public Product(int id, String name, int price, String location) {
+    public Product(int id, String name, int price, String location) throws SQLException {
         this.id = id;
         this.name = name;
         this.price = price;
         this.location = location;
     }
 
-    public Product() {
+    public Product() throws SQLException {
 
     }
 
-    public Product productConsole(Scanner scanner) {
-        System.out.println("Name: ");
-        String name = scanner.nextLine();
-        System.out.println("Price: ");
-        String price = scanner.nextLine();
-        System.out.println("Location: ");
-        String location = scanner.nextLine();
-        Product product = new Product(name, Integer.parseInt(price), location);
-        return product;
+    public void productConsole(Scanner scanner, String choice) throws SQLException {
+        int id = 0;
+        Scanner idScanner = new Scanner(System.in);
+        if (choice.equals("1") || choice.equals("2")) {
+            if (choice.equals("2")) {
+                System.out.println("Choose product to update by ID:");
+                id = idScanner.nextInt();
+            }
+            System.out.println("Name: ");
+            String name = scanner.nextLine();
+            System.out.println("Price: ");
+            String price = scanner.nextLine();
+            System.out.println("Location: ");
+            String location = scanner.nextLine();
+            Product product = new Product(id, name, Integer.parseInt(price), location);
+            if (choice.equals("1")) {
+                db.createProduct(product);
+            } else {
+                db.updateProduct(product);
+            }
+        } else {
+            System.out.println("Choose product to delete by ID:");
+            Product product = new Product();
+            product.setId(idScanner);
+            db.deleteProduct(product);
+        }
     }
 
-    public void read(DB db) throws SQLException {
+    public void read() throws SQLException {
+        System.out.println();
         for (Product product : db.getProducts()) {
-            System.out.println("ID: " + product.getId() + "\nName: " + product.getName() + "\nPrice: " + product.getPrice() + "\nLocation: " + product.getLocation());
+            System.out.println("ID: " + product.getId() + "\nName: " + product.getName() + "\nPrice: " + product.getPrice() + "\nLocation: " + product.getLocation() + "\n");
         }
     }
 
@@ -46,8 +59,8 @@ public class Product {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Scanner scanner) {
+        this.id = scanner.nextInt();
     }
 
     public String getName() {

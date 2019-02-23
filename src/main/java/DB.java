@@ -20,7 +20,7 @@ public class DB {
     }
 
     public void updateProduct(Product product) throws SQLException {
-        query = "UPDATE TABLE products SET (`product_name`, `product_price`, `product_location`) values(?, ?, ?) WHERE `id`=" + product.getId() + "";
+        query = "UPDATE products SET `product_name`=?, `product_price`=?, `product_location`=? WHERE `id`=" + product.getId() + "";
         createStatement(product, query);
     }
 
@@ -37,8 +37,12 @@ public class DB {
         return productList;
     }
 
-    public void deleteProduct(Product product) {
-
+    public void deleteProduct(Product product) throws SQLException {
+        query = "DELETE FROM products WHERE `id`=?";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, product.getId());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 
     public void createStatement(Product product, String query) throws SQLException {
@@ -50,6 +54,14 @@ public class DB {
         preparedStatement.close();
     }
 
-
-
+    public boolean verifyProduct(int id) throws SQLException {
+        query = "SELECT * FROM products WHERE id=" + id + "";
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
