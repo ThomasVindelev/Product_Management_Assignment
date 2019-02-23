@@ -11,7 +11,7 @@ public class DB {
     private String query;
 
     public DB() throws SQLException {
-        this.connection = DriverManager.getConnection("jdbc:mysql://den1.mysql4.gear.host:3306/thomasdatabase?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false", "thomasdatabase", "Uw3LL8C-~yiV");
+        this.connection = DriverManager.getConnection("jdbc:mysql://localhost/products?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false", "root", "");
     }
 
     public void createProduct(Product product) throws SQLException {
@@ -30,8 +30,11 @@ public class DB {
         resultSet = statement.executeQuery(query);
         List<Product> productList = new ArrayList();
         while (resultSet.next()) {
-            Product product = new Product(resultSet.getInt("id"), resultSet.getString("product_name"),
-            resultSet.getInt("product_price"), resultSet.getString("product_location"));
+            Product product = new Product(
+                    resultSet.getInt("id"),
+                    resultSet.getString("product_name"),
+                    resultSet.getInt("product_price"),
+                    resultSet.getString("product_location"));
             productList.add(product);
         }
         return productList;
@@ -55,9 +58,10 @@ public class DB {
     }
 
     public boolean verifyProduct(int id) throws SQLException {
-        query = "SELECT * FROM products WHERE id=" + id + "";
-        statement = connection.createStatement();
-        resultSet = statement.executeQuery(query);
+        query = "SELECT * FROM products WHERE id=?";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             return true;
         } else {
