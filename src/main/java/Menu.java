@@ -5,9 +5,9 @@ public class Menu {
 
     public void start() throws SQLException {
 
-        Product product = new Product();
-        boolean isOver = false;
-        Scanner scanner = new Scanner(System.in);
+        Product product =   new Product();
+        Scanner scanner =   new Scanner(System.in);
+        boolean isOver =    false;
 
         System.out.println("Welcome to my-KEA.");
 

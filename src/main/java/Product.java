@@ -27,6 +27,10 @@ public class Product {
             if (choice.equals("2")) {
                 System.out.println("Choose product to update by ID:");
                 id = idScanner.nextInt();
+                if (!db.verifyProduct(id)) {
+                    System.out.println("Not a valid ID");
+                    return;
+                }
             }
             System.out.println("Name: ");
             String name = scanner.nextLine();
@@ -44,6 +48,10 @@ public class Product {
             System.out.println("Choose product to delete by ID:");
             Product product = new Product();
             product.setId(idScanner);
+            if (!db.verifyProduct(product.getId())) {
+                System.out.println("Not a valid ID");
+                return;
+            }
             db.deleteProduct(product);
         }
     }
@@ -86,4 +94,5 @@ public class Product {
     public void setLocation(String location) {
         this.location = location;
     }
+
 }
