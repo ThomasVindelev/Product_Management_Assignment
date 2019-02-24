@@ -11,6 +11,7 @@ public class Product {
     private Location productLocation = new Location();
     private DB db = new DB();
     private ProductType productType = new ProductType();
+    private int quantity;
 
     public Product(int id, String type, String name, int price, String location) throws SQLException {
         this.id = id;
@@ -18,6 +19,7 @@ public class Product {
         this.name = name;
         this.price = price;
         this.location = location;
+
     }
 
     public Product() throws SQLException {
@@ -44,9 +46,13 @@ public class Product {
             String price = scanner.nextLine();
             productLocation.printProductLocations ();
             location = scanner.nextLine();
+            System.out.print("Quantity: ");
+            quantity = scanner.nextInt();
             Product product = new Product(id, type, name, Integer.parseInt(price), location);
+
             if (choice.equals("1")) {
                 db.createProduct(product);
+                db.addProductToInventory(location, quantity);
                 System.out.println("\nProduct created!\n");
             } else {
                 db.updateProduct(product);

@@ -13,7 +13,6 @@
 
 
 -- Dumping database structure for products
-DROP DATABASE IF EXISTS `products`;
 CREATE DATABASE IF NOT EXISTS `products` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `products`;
 
@@ -36,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `location` varchar(50) DEFAULT NULL,
   `product_type_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table products.product_inventory
@@ -45,8 +44,9 @@ CREATE TABLE IF NOT EXISTS `product_inventory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
   `location_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table products.product_types

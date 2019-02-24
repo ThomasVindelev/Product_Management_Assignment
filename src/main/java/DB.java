@@ -18,6 +18,30 @@ public class DB {
         executeStatement(product, query);
     }
 
+    public int getLastInsertedId() throws SQLException {
+        query = "SELECT last_insert_id() as last_id";
+        preparedStatement = connection.prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        int last_id = 0;
+        if (resultSet.first()){
+            last_id = resultSet.getInt("last_id");
+        }
+        return last_id;
+    }
+
+    public void addProductToInventory(String locationId, int quantity) throws SQLException {
+        int productId = getLastInsertedId();
+        query = "INSERT INTO product_inventory (`product_id`,`location_id`, `quantity`) values(?, ?, ?)";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, productId);
+        preparedStatement.setString(2, locationId);
+        preparedStatement.setInt(3, quantity);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+
+    }
+
+
     public void updateProduct(Product product) throws SQLException {
         query = "UPDATE products SET `product_type_id`=?, `name`=?, `price`=?, `location`=? WHERE `id`=" + product.getId() + "";
         executeStatement(product, query);
