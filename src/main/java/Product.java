@@ -10,6 +10,7 @@ public class Product {
     private String location;
     private Location productLocation = new Location();
     private DB db = new DB();
+    private ProductType productType = new ProductType();
 
     public Product(int id, String type, String name, int price, String location) throws SQLException {
         this.id = id;
@@ -35,13 +36,14 @@ public class Product {
                     return;
                 }
             }
-            System.out.println("Type:\n1. Chair    2. Table    3. Bench    4. Shelf    5. Couch    6. Bed    7. Closet    8. Cupboard");
+            productType.printPoductTypes();
             type = scanner.nextLine();
-            location = productLocation.setLocation(type);
             System.out.print("\nName: ");
             name = scanner.nextLine();
             System.out.print("Price: ");
             String price = scanner.nextLine();
+            productLocation.printProductLocations ();
+            location = scanner.nextLine();
             Product product = new Product(id, type, name, Integer.parseInt(price), location);
             if (choice.equals("1")) {
                 db.createProduct(product);

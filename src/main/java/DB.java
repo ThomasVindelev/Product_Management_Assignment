@@ -24,7 +24,10 @@ public class DB {
     }
 
     public List<Product> getProducts() throws SQLException {
-        query = "SELECT products.*,product_types.product_type FROM products INNER JOIN product_types ON products.product_type_id=product_types.id";
+        query = "SELECT products.*,product_types.product_type,locations.name as location_name, locations.address " +
+                "FROM products " +
+                "INNER JOIN product_types ON products.product_type_id=product_types.id " +
+                "INNER JOIN locations ON products.location=locations.id";
         Statement statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
         List<Product> productList = new ArrayList();
@@ -34,7 +37,7 @@ public class DB {
                     resultSet.getString("product_type"),
                     resultSet.getString("name"),
                     resultSet.getInt("price"),
-                    resultSet.getString("location"));
+                    resultSet.getString("location_name")+ ", "+ resultSet.getString("address"));
             productList.add(product);
         }
         return productList;
@@ -64,5 +67,34 @@ public class DB {
         preparedStatement.setInt(1, id);
         resultSet = preparedStatement.executeQuery();
         return resultSet.next();
+    }
+
+    public List<ProductType> getProductTypes() throws SQLException {
+        query = "SELECT* FROM product_types";
+        Statement statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        List<ProductType> productTypeList = new ArrayList();
+        while (resultSet.next()) {
+            ProductType productType = new ProductType(
+                    resultSet.getInt("id"),
+                    resultSet.getString("product_type"));
+            productTypeList.add(productType);
+        }
+        return productTypeList;
+    }
+
+    public List<Location> getProductLocations() throws SQLException {
+        query = "SELECT* FROM locations";
+        Statement statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        List<Location> locationList = new ArrayList();
+        while (resultSet.next()) {
+            Location productLocation = new Location(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("address"));
+            locationList.add(productLocation);
+        }
+        return locationList;
     }
 }
