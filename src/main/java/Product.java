@@ -36,7 +36,7 @@ public class Product {
                     return;
                 }
             }
-            productType.printPoductTypes();
+            productType.printProductTypes();
             type = scanner.nextLine();
             System.out.print("\nName: ");
             name = scanner.nextLine();
