@@ -4,13 +4,16 @@ import java.util.Scanner;
 public class Product {
 
     private int id;
+    private String type;
     private String name;
     private int price;
     private String location;
+    private Location productLocation = new Location();
     private DB db = new DB();
 
-    public Product(int id, String name, int price, String location) throws SQLException {
+    public Product(int id, String type, String name, int price, String location) throws SQLException {
         this.id = id;
+        this.type = type;
         this.name = name;
         this.price = price;
         this.location = location;
@@ -21,7 +24,7 @@ public class Product {
     }
 
     public void productConsole(Scanner scanner, String choice) throws SQLException {
-        int id = 0;
+        id = 0;
         Scanner idScanner = new Scanner(System.in);
         if (choice.equals("1") || choice.equals("2")) {
             if (choice.equals("2")) {
@@ -32,13 +35,14 @@ public class Product {
                     return;
                 }
             }
-            System.out.println("\nName: ");
-            String name = scanner.nextLine();
-            System.out.println("Price: ");
+            System.out.println("Type:\n1. Chair    2. Table    3. Bench    4. Shelf    5. Couch    6. Bed    7. Closet    8. Cupboard");
+            type = scanner.nextLine();
+            location = productLocation.setLocation(type);
+            System.out.print("\nName: ");
+            name = scanner.nextLine();
+            System.out.print("Price: ");
             String price = scanner.nextLine();
-            System.out.println("Location: ");
-            String location = scanner.nextLine();
-            Product product = new Product(id, name, Integer.parseInt(price), location);
+            Product product = new Product(id, type, name, Integer.parseInt(price), location);
             if (choice.equals("1")) {
                 db.createProduct(product);
                 System.out.println("\nProduct created!\n");
@@ -62,7 +66,7 @@ public class Product {
     public void read() throws SQLException {
         System.out.println();
         for (Product product : db.getProducts()) {
-            System.out.println("ID: " + product.getId() + "\nName: " + product.getName() + "\nPrice: " + product.getPrice() + "\nLocation: " + product.getLocation() + "\n");
+            System.out.println("ID: " + product.getId() + "\nType: " + product.getType() + "\nName: " + product.getName() + "\nPrice: " + product.getPrice() + "\nLocation: " + product.getLocation() + "\n");
         }
     }
 
@@ -72,6 +76,14 @@ public class Product {
 
     public void setId(Scanner scanner) {
         this.id = scanner.nextInt();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -97,4 +109,5 @@ public class Product {
     public void setLocation(String location) {
         this.location = location;
     }
+
 }

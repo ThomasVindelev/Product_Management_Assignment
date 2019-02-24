@@ -14,26 +14,27 @@ public class DB {
     }
 
     public void createProduct(Product product) throws SQLException {
-        query = "INSERT INTO products (`product_name`, `product_price`, `product_location`) values(?, ?, ?)";
+        query = "INSERT INTO products (`product_type_id`,`name`, `price`, `location`) values(?, ?, ?, ?)";
         executeStatement(product, query);
     }
 
     public void updateProduct(Product product) throws SQLException {
-        query = "UPDATE products SET `product_name`=?, `product_price`=?, `product_location`=? WHERE `id`=" + product.getId() + "";
+        query = "UPDATE products SET `product_type_id`=?, `name`=?, `price`=?, `location`=? WHERE `id`=" + product.getId() + "";
         executeStatement(product, query);
     }
 
     public List<Product> getProducts() throws SQLException {
-        query = "SELECT * FROM products";
+        query = "SELECT products.*,product_types.product_type FROM products INNER JOIN product_types ON products.product_type_id=product_types.id";
         Statement statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
         List<Product> productList = new ArrayList();
         while (resultSet.next()) {
             Product product = new Product(
                     resultSet.getInt("id"),
-                    resultSet.getString("product_name"),
-                    resultSet.getInt("product_price"),
-                    resultSet.getString("product_location"));
+                    resultSet.getString("product_type"),
+                    resultSet.getString("name"),
+                    resultSet.getInt("price"),
+                    resultSet.getString("location"));
             productList.add(product);
         }
         return productList;
@@ -49,9 +50,10 @@ public class DB {
 
     private void executeStatement(Product product, String query) throws SQLException {
         preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, product.getName());
-        preparedStatement.setInt(2, product.getPrice());
-        preparedStatement.setString(3, product.getLocation());
+        preparedStatement.setString(1, product.getType());
+        preparedStatement.setString(2, product.getName());
+        preparedStatement.setInt(3, product.getPrice());
+        preparedStatement.setString(4, product.getLocation());
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
