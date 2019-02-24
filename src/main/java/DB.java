@@ -51,7 +51,8 @@ public class DB {
         query = "SELECT products.*,product_types.product_type,locations.name as location_name, locations.address " +
                 "FROM products " +
                 "INNER JOIN product_types ON products.product_type_id=product_types.id " +
-                "INNER JOIN locations ON products.location=locations.id";
+                "INNER JOIN locations ON products.location=locations.id " +
+                "ORDER BY id ASC ";
         Statement statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
         List<Product> productList = new ArrayList();
