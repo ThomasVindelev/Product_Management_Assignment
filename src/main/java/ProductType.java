@@ -9,7 +9,6 @@ public class ProductType {
 
     public ProductType(int id,String productType) throws SQLException {
         this.id = id;
-
         this.productType = productType;
     }
 
@@ -25,7 +24,7 @@ public class ProductType {
         this.id = scanner.nextInt();
     }
 
-    public String getproductType() {
+    public String getProductType() {
         return productType;
     }
 
@@ -34,10 +33,10 @@ public class ProductType {
 
     }
 
-    public void printPoductTypes() throws SQLException {
+    public void printProductTypes() throws SQLException {
         System.out.println("Select product type:\n");
         for (ProductType productType : db.getProductTypes()) {
-            System.out.print("ID:" + productType.getId() + " " + productType.getproductType() + "\n");
+            System.out.print("ID:" + productType.getId() + " " + productType.getProductType() + "\n");
         }
     }
 }
