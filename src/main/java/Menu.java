@@ -9,7 +9,7 @@ public class Menu {
         Scanner scanner =   new Scanner(System.in);
         boolean isOver =    false;
 
-        System.out.println("Welcome to my-KEA.");
+        System.out.println("Welcome to my-KEA!");
 
         while (!isOver) {
             System.out.println("1. Create product" + "\n2. Update product" +

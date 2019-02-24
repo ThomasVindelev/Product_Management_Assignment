@@ -5,7 +5,6 @@ import java.util.List;
 public class DB {
 
     private PreparedStatement preparedStatement;
-    private Statement statement;
     private Connection connection;
     private ResultSet resultSet;
     private String query;
@@ -16,17 +15,17 @@ public class DB {
 
     public void createProduct(Product product) throws SQLException {
         query = "INSERT INTO products (`product_name`, `product_price`, `product_location`) values(?, ?, ?)";
-        createStatement(product, query);
+        executeStatement(product, query);
     }
 
     public void updateProduct(Product product) throws SQLException {
         query = "UPDATE products SET `product_name`=?, `product_price`=?, `product_location`=? WHERE `id`=" + product.getId() + "";
-        createStatement(product, query);
+        executeStatement(product, query);
     }
 
     public List<Product> getProducts() throws SQLException {
         query = "SELECT * FROM products";
-        statement = connection.createStatement();
+        Statement statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
         List<Product> productList = new ArrayList();
         while (resultSet.next()) {
@@ -48,7 +47,7 @@ public class DB {
         preparedStatement.close();
     }
 
-    public void createStatement(Product product, String query) throws SQLException {
+    private void executeStatement(Product product, String query) throws SQLException {
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, product.getName());
         preparedStatement.setInt(2, product.getPrice());
@@ -62,10 +61,6 @@ public class DB {
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id);
         resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            return true;
-        } else {
-            return false;
-        }
+        return resultSet.next();
     }
 }
