@@ -29,11 +29,11 @@ public class Product {
 
     public void productConsole(Scanner scanner, String choice) throws SQLException {
         id = 0;
-        Scanner idScanner = new Scanner(System.in);
+        Scanner intScanner = new Scanner(System.in);
         if (choice.equals("1") || choice.equals("2")) {
             if (choice.equals("2")) {
                 System.out.println("Choose product to update by ID:");
-                id = idScanner.nextInt();
+                id = intScanner.nextInt();
                 if (!db.verifyProduct(id)) {
                     System.out.println("Not a valid ID.");
                     return;
@@ -45,10 +45,10 @@ public class Product {
             name = scanner.nextLine();
             System.out.print("Price: ");
             String price = scanner.nextLine();
-            productLocation.printProductLocations ();
+            productLocation.printProductLocations();
             location = scanner.nextLine();
             System.out.print("Quantity: ");
-            quantity = scanner.nextInt();
+            quantity = intScanner.nextInt();
             Product product = new Product(id, type, name, Integer.parseInt(price), location);
 
             if (choice.equals("1")) {
@@ -62,7 +62,7 @@ public class Product {
         } else {
             System.out.println("Choose product to delete by ID:");
             Product product = new Product();
-            product.setId(idScanner);
+            product.setId(intScanner);
             if (!db.verifyProduct(product.getId())) {
                 System.out.println("Not a valid ID.");
                 return;
