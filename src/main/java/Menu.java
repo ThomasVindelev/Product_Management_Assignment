@@ -5,7 +5,7 @@ public class Menu {
 
     public void start() throws SQLException {
 
-        Product product =   new Product();
+        Logic logic = new Logic();
         Scanner scanner =   new Scanner(System.in);
         boolean isOver =    false;
 
@@ -18,18 +18,18 @@ public class Menu {
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    product.productConsole(scanner, choice);
+                    logic.prompt(scanner, choice);
                     break;
                 case "2":
-                    product.read();
-                    product.productConsole(scanner, choice);
+                    logic.read();
+                    logic.prompt(scanner, choice);
                     break;
                 case "3":
-                    product.read();
-                    product.productConsole(scanner, choice);
+                    logic.read();
+                    logic.prompt(scanner, choice);
                     break;
                 case "4":
-                    product.read();
+                    logic.read();
                     break;
                 case "/quit":
                     isOver = true;
