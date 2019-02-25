@@ -35,7 +35,7 @@ public class Menu {
                     isOver = true;
                     break;
                 default:
-                    System.out.println("Not a valid input.\n");
+
                     break;
             }
         }

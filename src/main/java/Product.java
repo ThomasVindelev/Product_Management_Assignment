@@ -3,15 +3,16 @@ import java.util.Scanner;
 
 public class Product {
 
-    private int id;
-    private String type;
-    private String name;
-    private int price;
-    private String location;
-    private Location productLocation = new Location();
-    private DB db = new DB();
-    private ProductType productType = new ProductType();
-    private int quantity;
+    private int     id;
+    private String  type;
+    private String  name;
+    private int     price;
+    private String  location;
+    private int     quantity;
+
+    private Location productLocation =  new Location();
+    private DB db =                     new DB();
+    private ProductType productType =   new ProductType();
 
     public Product(int id, String type, String name, int price, String location) throws SQLException {
         this.id = id;
@@ -40,7 +41,7 @@ public class Product {
             }
             productType.printProductTypes();
             type = scanner.nextLine();
-            System.out.print("\nName: ");
+            System.out.print("Name: ");
             name = scanner.nextLine();
             System.out.print("Price: ");
             String price = scanner.nextLine();
